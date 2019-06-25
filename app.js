@@ -36,6 +36,14 @@ client.on("messageReactionAdd", (reaction, user) => {
   }
 });
 
+client.on('ready', () => {
+  client.user.setPresence({
+      game: {
+          name: 'Created by Creators Club! https://creatorsclub.net/'
+      }
+  });
+});
+
 client.login(config.token);
 
 embedMessage = (message, description = "") => {
