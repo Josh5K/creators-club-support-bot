@@ -24,15 +24,17 @@ client.on("message", message => {
 
 client.on("messageReactionAdd", (reaction, user) => {
   if(user.id == client.user.id) return;
-  let author = client.users.get(reaction.message.embeds[0].footer.text);
 
-  if(reaction.emoji == "✅") {
-    author.send(`${user.username} has accepted the following request!`);
-    author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
-  }
-  else if(reaction.emoji == "🛑") {
-    author.send(`${user.username} has declined the following request!`);
-    author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
+  if(reaction.message.embeds) {
+    let author = client.users.get(reaction.message.embeds[0].footer.text);
+    if(reaction.emoji == "✅") {
+      author.send(`${user.username} has accepted the following request!`);
+      author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
+    }
+    else if(reaction.emoji == "🛑") {
+      author.send(`${user.username} has declined the following request!`);
+      author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
+    }
   }
 });
 
