@@ -15,7 +15,8 @@ client.on("message", message => {
     client.channels.get(forwards[message.channel.id]).send(embedMessage(message, `**channel:** ${message.channel} | **user:** ${message.author}\n\n`))
     .then(async (msg) =>  {
       await msg.react('✅');
-      msg.react('🛑');
+      await msg.react('🛑');
+      msg.react('👀');
     });
     message.delete();
     message.author.send("We have recived your support request. We will get back to you when we finish our review.");
@@ -35,6 +36,10 @@ client.on("messageReactionAdd", (reaction, user) => {
       author.send(`${user.username} has declined the following request!`);
       author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
     }
+    else if(reaction.emoji == "👀") {
+      author.send(`${user.username} is looking into your request!`);
+      author.send(new Discord.RichEmbed(reaction.message.embeds[0]));
+    }
   }
 });
 
@@ -50,7 +55,7 @@ client.login(config.token);
 
 embedMessage = (message, description = "") => {
   const embed = new Discord.RichEmbed()
-  embed.setTitle("Creators Club™");
+  embed.setTitle("Creators Club™ | Version 1.1");
   embed.setDescription(description + message.content);
   embed.setColor('#36393f');
   embed.setAuthor(message.author.username, message.author.avatarURL);
